@@ -25,6 +25,5 @@ Thumbs.db
 *.swo
 *~
 
-# Configuration and secrets
-config.properties
+# Configuration and secrets 
 passwords.json
