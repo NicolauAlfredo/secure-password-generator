@@ -21,7 +21,7 @@ import java.util.Random;
  */
 public class PasswordService {
 
-    private static final String PASSWORDS_FILE = "passwords.json";
+    private static final String PASSWORDS_FILE = "data/passwords.json";
     private final ObjectMapper mapper = new ObjectMapper();
     private final Random random = new Random();
 
