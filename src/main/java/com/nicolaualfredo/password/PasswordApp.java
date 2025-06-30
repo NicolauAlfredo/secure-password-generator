@@ -22,7 +22,7 @@ public class PasswordApp {
             // Register the /generate endpoint
             server.createContext("/generate", new GenerateHandler());
 
-            server.setExecutor(null); // Default executor
+            server.setExecutor(null);
             server.start();
 
             System.out.println("🚀Password Generator API running at http://localhost:8000");
