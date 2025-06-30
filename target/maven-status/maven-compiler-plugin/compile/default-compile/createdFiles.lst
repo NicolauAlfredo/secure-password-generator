@@ -1,0 +1,7 @@
+com\nicolaualfredo\password\handler\GenerateHandler.class
+com\nicolaualfredo\password\model\PasswordResponse.class
+com\nicolaualfredo\password\model\PasswordLog.class
+com\nicolaualfredo\password\PasswordApp.class
+com\nicolaualfredo\password\service\PasswordService.class
+com\nicolaualfredo\password\util\CorsUtil.class
+com\nicolaualfredo\password\model\PasswordRequest.class
