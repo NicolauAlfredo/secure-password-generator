@@ -31,9 +31,15 @@ public class GenerateHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        CorsUtil.handleCors(exchange); // Enable CORS for frontend
+        CorsUtil.handleCors(exchange); // always add CORS headers
 
-        // Allow only POST requests
+        // ✅ Handle preflight OPTIONS request
+        if ("OPTIONS".equalsIgnoreCase(exchange.getRequestMethod())) {
+            exchange.sendResponseHeaders(204, -1); // No Content
+            return;
+        }
+
+        // ✅ Only allow POST
         if (!"POST".equalsIgnoreCase(exchange.getRequestMethod())) {
             exchange.sendResponseHeaders(405, -1); // Method Not Allowed
             return;
