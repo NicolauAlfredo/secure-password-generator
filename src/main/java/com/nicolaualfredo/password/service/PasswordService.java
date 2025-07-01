@@ -6,7 +6,9 @@ package com.nicolaualfredo.password.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.nicolaualfredo.password.model.PasswordLog;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,14 +21,30 @@ import java.util.Random;
  *
  * @author Nicolau Alfredo
  */
+/**
+ * This service class handles password generation and storage. It supports
+ * secure password generation with customizable rules, and persists generated
+ * passwords to a local JSON file.
+ */
 public class PasswordService {
 
     private static final String PASSWORDS_FILE = "data/passwords.json";
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
     private final Random random = new Random();
 
+    public PasswordService() {
+        mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule()); // Enables LocalDateTime support
+    }
+
     /**
-     * Gera uma senha com os parâmetros desejados.
+     * Generates a random password based on the user's configuration.
+     *
+     * @param length desired length of the password
+     * @param includeUppercase whether to include uppercase letters
+     * @param includeNumbers whether to include numeric digits
+     * @param includeSymbols whether to include special characters
+     * @return generated password string
      */
     public String generate(int length, boolean includeUppercase, boolean includeNumbers, boolean includeSymbols) {
         String lowercase = "abcdefghijklmnopqrstuvwxyz";
@@ -47,7 +65,7 @@ public class PasswordService {
         }
 
         if (pool.length() == 0) {
-            return ""; // Nothing to use
+            return ""; // No valid characters
         }
         StringBuilder password = new StringBuilder();
         for (int i = 0; i < length; i++) {
@@ -59,7 +77,13 @@ public class PasswordService {
     }
 
     /**
-     * Saves the generated password with metadata in the JSON file.
+     * Saves the generated password with metadata to the JSON file.
+     *
+     * @param password the generated password
+     * @param length the length of the password
+     * @param includeUppercase whether it included uppercase letters
+     * @param includeNumbers whether it included numbers
+     * @param includeSymbols whether it included symbols
      */
     public void savePassword(String password, int length, boolean includeUppercase,
             boolean includeNumbers, boolean includeSymbols) {
@@ -76,7 +100,10 @@ public class PasswordService {
     }
 
     /**
-     * Loads already generated passwords from JSON.
+     * Loads all previously generated passwords from the local JSON file.
+     *
+     * @return list of password logs, or an empty list if file doesn't exist or
+     * is invalid
      */
     public List<PasswordLog> loadPasswords() {
         try {
@@ -97,5 +124,4 @@ public class PasswordService {
             return new ArrayList<>();
         }
     }
-
 }
