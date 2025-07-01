@@ -27,4 +27,4 @@ Thumbs.db
 
 # Configuration and secrets 
 passwords.json
-conf.properties
+config.properties

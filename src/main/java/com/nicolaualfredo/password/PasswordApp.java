@@ -25,7 +25,7 @@ public class PasswordApp {
             server.setExecutor(null);
             server.start();
 
-            System.out.println("🚀Password Generator API running at http://localhost:8000");
+            System.out.println("Password Generator API running at http://localhost:8000");
 
         } catch (IOException e) {
             System.err.println("Failed to start server: " + e.getMessage());
